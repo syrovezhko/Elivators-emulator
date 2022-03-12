@@ -1,9 +1,15 @@
-// movig gondola function 
+let floorHeight = 400;// start gondola position
+
+// moving gondola function 
 async function timer(id) {
-  console.log(`set timer for ${id-m+1} sec after button ${id} has clicked`);
+  console.log(`set timer for ${id} sec after button ${id} has clicked`);
   for (let m = id; m > 0; m--) {
+    let n = floorHeight;
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log(`${m}`, `sec has passed after button ${id} has clicked`);
+    console.log(`${id-m+1}`, `sec has passed after button ${id} has clicked`);
+    n = floorHeight -(id-m)* 100; 
+    console.log(n);
+    document.getElementsByClassName('gondola-position')[0].style.top = `${n +"px"}`;
   };
   console.log("done");
 }
@@ -13,18 +19,18 @@ document.querySelectorAll('.button').forEach(item => {
   item.addEventListener("click", function() {
   this.classList.add("button-active");
   timer(this.id).then(() => this.classList.remove("button-active"));
-  document.getElementsByClassName('gondola-position')[0].style.top = `${(5-this.id)*100+"px"}`;
 });
 })
+
 
 /*----------------
 -first iteration-
 ----------------*/
-// let flor1 = document.getElementById("1");
-// let flor2 = document.getElementById("2");
-// let flor3 = document.getElementById("3");
-// let flor4 = document.getElementById("4");
-// let flor5 = document.getElementById("5");
+// let floor1 = document.getElementById("1");
+// let floor2 = document.getElementById("2");
+// let floor3 = document.getElementById("3");
+// let floor4 = document.getElementById("4");
+// let floor5 = document.getElementById("5");
 
 // async function timer(id) {
 //   console.log(`button ${id} has clicked`);
@@ -39,23 +45,23 @@ document.querySelectorAll('.button').forEach(item => {
 //   console.log("done");
 // }
 
-// flor1.addEventListener("click", function() {
+// floor1.addEventListener("click", function() {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
-// flor2.addEventListener("click", function() {
+// floor2.addEventListener("click", function() {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
-// flor3.addEventListener("click", function() {
+// floor3.addEventListener("click", function() {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
-// flor4.addEventListener("click", function() {
+// floor4.addEventListener("click", function() {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
-// flor5.addEventListener("click", function() {
+// floor5.addEventListener("click", function() {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
