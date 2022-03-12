@@ -2,16 +2,21 @@ let floorHeight = 400;// start gondola position
 
 // moving gondola function 
 async function timer(id) {
-  console.log(`set timer for ${id} sec after button ${id} has clicked`);
-  for (let m = id; m > 0; m--) {
-    let n = floorHeight;
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log(`${id-m+1}`, `sec has passed after button ${id} has clicked`);
-    n = floorHeight -(id-m)* 100; 
-    console.log(n);
-    document.getElementsByClassName('gondola-position')[0].style.top = `${n +"px"}`;
-  };
-  console.log("done");
+  if (lastId < id && lastId != id) {
+    for (let m = 100*(id-lastId); m > 0; m--) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+      floorHeight = floorHeight - 1; 
+      document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
+    };
+    lastId = id;
+  } else if (lastId > id && lastId != id) {
+    for (let m = 100*(lastId-id); m > 0; m--) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+      floorHeight = floorHeight + 1; 
+      document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
+    };
+    lastId = id;
+  }
 }
 
 // click handling
