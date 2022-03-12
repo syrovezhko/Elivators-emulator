@@ -1,6 +1,6 @@
-// muvig gondola function 
+// movig gondola function 
 async function timer(id) {
-  console.log(`set timer for ${id} sec after button ${id} has clicked`);
+  console.log(`set timer for ${id-m+1} sec after button ${id} has clicked`);
   for (let m = id; m > 0; m--) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     console.log(`${m}`, `sec has passed after button ${id} has clicked`);
@@ -13,6 +13,7 @@ document.querySelectorAll('.button').forEach(item => {
   item.addEventListener("click", function() {
   this.classList.add("button-active");
   timer(this.id).then(() => this.classList.remove("button-active"));
+  document.getElementsByClassName('gondola-position')[0].style.top = `${(5-this.id)*100+"px"}`;
 });
 })
 
