@@ -1,29 +1,39 @@
 let floorHeight = 400;// start gondola position
+let lastId = 1;
+
+// timer function
+async function delay (t) {
+  await new Promise(resolve => setTimeout(resolve, t));
+}
+
+// height Change function 
+function heightChange (f) {
+  document.getElementsByClassName('gondola-position')[0].style.top = `${f +"px"}`;
+}
 
 // moving gondola function 
-async function timer(id) {
-  if (lastId < id && lastId != id) {
-    for (let m = 100*(id-lastId); m > 0; m--) {
-      await new Promise(resolve => setTimeout(resolve, 10));
-      floorHeight = floorHeight - 1; 
-      document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
-    };
-    lastId = id;
-  } else if (lastId > id && lastId != id) {
-    for (let m = 100*(lastId-id); m > 0; m--) {
-      await new Promise(resolve => setTimeout(resolve, 10));
-      floorHeight = floorHeight + 1; 
-      document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
-    };
-    lastId = id;
+async function gondolaMotion (id, direction) {
+  for (let m = 100 * Math.abs(id-lastId); m > 0; m--) {
+    await delay (10);
+    if (direction > 0) floorHeight--;
+    else floorHeight++;
+    heightChange (floorHeight);
+  };
+}
+
+// moving elivator function 
+async function elevatorCall (id) {
+  if (lastId != id) {
+    await gondolaMotion (id, id-lastId);
   }
+  lastId = id;
 }
 
 // click handling
 document.querySelectorAll('.button').forEach(item => {
   item.addEventListener("click", function() {
   this.classList.add("button-active");
-  timer(this.id).then(() => this.classList.remove("button-active"));
+  elevatorCall (this.id).then(() => this.classList.remove("button-active"));
 });
 })
 
@@ -70,3 +80,38 @@ document.querySelectorAll('.button').forEach(item => {
 //   this.classList.add("button-active");
 //   timer(this.id).then(() => this.classList.remove("button-active"));
 // });
+
+//=====================================================================
+
+/*----------------
+-second iteration-
+----------------*/
+// let floorHeight = 400;// start gondola position
+// let lastId = 1;
+
+// // moving gondola function 
+// async function timer(id) {
+//   if (lastId < id && lastId != id) {
+//     for (let m = 100*(id-lastId); m > 0; m--) {
+//       await new Promise(resolve => setTimeout(resolve, 10));
+//       floorHeight = floorHeight - 1; 
+//       document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
+//     };
+//     lastId = id;
+//   } else if (lastId > id && lastId != id) {
+//     for (let m = 100*(lastId-id); m > 0; m--) {
+//       await new Promise(resolve => setTimeout(resolve, 10));
+//       floorHeight = floorHeight + 1; 
+//       document.getElementsByClassName('gondola-position')[0].style.top = `${floorHeight +"px"}`;
+//     };
+//     lastId = id;
+//   }
+// }
+
+// // click handling
+// document.querySelectorAll('.button').forEach(item => {
+//   item.addEventListener("click", function() {
+//   this.classList.add("button-active");
+//   timer(this.id).then(() => this.classList.remove("button-active"));
+// });
+// })
