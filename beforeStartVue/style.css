@@ -75,6 +75,9 @@
 .gondola-position {
   top: 400px;
 }
+.gondola-opacity {
+  opacity: 0.1;
+}
 .screen {
   display: block;
   margin-left: 25px;

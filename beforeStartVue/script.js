@@ -1,9 +1,37 @@
 let floorHeight = 400;// start gondola position
-let lastId = 1;
+let lastId = 1; //set default elevator position
+let nextStopScreen = document.getElementsByClassName('gondola')[0];
+let removeScreen = nextStopScreen.getElementsByClassName('screen');
+let blinkTime = 0.4 // set blink time after stop in seconds
 
 // timer function
 async function delay (t) {
   await new Promise(resolve => setTimeout(resolve, t));
+}
+// add screen function
+function addScreen(id, direction) {
+  let arrow;
+  if (direction > 0) arrow = '🠕';
+  else arrow = '🠗';
+  let screen = document.createElement("div");
+  screen.innerHTML = `${arrow} ${id}`;
+  screen.className = "screen";
+  nextStopScreen.appendChild(screen);
+}
+
+// dell screen function
+function dellScreen() { 
+  nextStopScreen.removeChild(removeScreen[0]);
+}
+// blink after stop function
+async function blink (t) {
+  for (let i = 0; i < 3; i++) {
+    await delay (t*1000);  
+    nextStopScreen.classList.add("gondola-opacity");
+    await delay (t*1000);
+    nextStopScreen.classList.remove("gondola-opacity");  
+  }
+  dellScreen();
 }
 
 // height Change function 
@@ -23,8 +51,12 @@ async function gondolaMotion (id, direction) {
 
 // moving elivator function 
 async function elevatorCall (id) {
+  addScreen(id, id-lastId);
   if (lastId != id) {
     await gondolaMotion (id, id-lastId);
+    blink (blinkTime);
+  } else {
+    dellScreen();
   }
   lastId = id;
 }
@@ -36,6 +68,7 @@ document.querySelectorAll('.button').forEach(item => {
   elevatorCall (this.id).then(() => this.classList.remove("button-active"));
 });
 })
+
 
 
 /*----------------
