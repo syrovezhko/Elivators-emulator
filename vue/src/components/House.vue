@@ -1,21 +1,22 @@
 <template>
   <div class="house">
-    <flor></flor>
-    <flor></flor>
-    <flor></flor>
-    <flor></flor>
-    <flor></flor>
+    <flor v-for = "num in numbers" :number = 'num'/>
     <lift-shaft></lift-shaft>
   </div>
 </template>
 
 <script>
 import Flor from './Flor.vue'
-
+// import listener from './../scripts/listener';
 import LiftShaft from './LiftShaft.vue'
   export default {
     name: 'house',
-  components:{ Flor, LiftShaft }
+  components:{ Flor, LiftShaft },
+  data (){
+    return {
+      numbers: Array.from({length: 5}, (_, i) => i + 1).reverse()
+    }
+  }
   }
 </script>
 

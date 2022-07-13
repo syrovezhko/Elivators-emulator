@@ -1,7 +1,7 @@
 <template>
   <div class="flor">
-    5
-    <div class="button" id="5">
+    {{number}}
+    <div class="button" :id="number">
       <div class="square">
         <div class="ring">
           <div class="circle"></div>
@@ -13,7 +13,8 @@
 
 <script>
   export default {
-    name: 'flor'
+    name: 'flor',
+    props: ['number']
   }
 </script>
 

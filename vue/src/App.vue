@@ -6,9 +6,14 @@
 
 <script>
 import House from './components/House.vue'
+// import {listener} from './scripts/listener.js'
 export default {
   name: 'app',
-  components:{ House }
+  components:{House},
+  data () {
+      console.log("Hello World");
+      // listener()
+  }
 }
 
 </script>
